@@ -2,8 +2,8 @@
 
 import os
 from pathlib import Path
-from typing import List, Optional
-from crewai_tools import BaseTool
+from typing import List, Optional, Type
+from crewai.tools import BaseTool
 from pydantic import BaseModel, Field
 
 from src.config.settings import POLICY_DOCS_DIR, SUPPORTED_EXTENSIONS
