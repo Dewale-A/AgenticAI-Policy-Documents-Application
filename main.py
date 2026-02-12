@@ -12,6 +12,9 @@ Options:
     --focus TOPIC       Focus analysis on specific topic or document
     --areas AREAS       Comma-separated list of focus areas (e.g., "GDPR,SOX")
     --report TYPE       Report type: executive, detailed, or full (default: full)
+    --pdf               Export report to PDF
+    --telegram          Send report to Telegram
+    --email             Send report via email
     --help              Show this help message
 """
 
@@ -93,6 +96,21 @@ def main():
         default="full",
         help="Type of report to generate (default: full)",
     )
+    parser.add_argument(
+        "--pdf",
+        action="store_true",
+        help="Export report to PDF format",
+    )
+    parser.add_argument(
+        "--telegram",
+        action="store_true",
+        help="Send report to Telegram (requires TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in .env)",
+    )
+    parser.add_argument(
+        "--email",
+        action="store_true",
+        help="Send report via email (requires SMTP settings in .env)",
+    )
     
     args = parser.parse_args()
     
@@ -140,6 +158,30 @@ def main():
         ))
         
         console.print(f"\n[green]✅ Report saved to {OUTPUT_DIR}/compliance_report.md[/green]")
+        
+        # Handle PDF export
+        if args.pdf or args.telegram or args.email:
+            try:
+                from src.utils.export import export_to_pdf, send_to_telegram, send_to_email
+                
+                console.print("\n[bold]Converting to PDF...[/bold]")
+                pdf_path = export_to_pdf()
+                console.print(f"[green]✅ PDF saved to {pdf_path}[/green]")
+                
+                # Send to Telegram
+                if args.telegram:
+                    console.print("\n[bold]Sending to Telegram...[/bold]")
+                    send_to_telegram(pdf_path)
+                
+                # Send via email
+                if args.email:
+                    console.print("\n[bold]Sending via email...[/bold]")
+                    send_to_email(pdf_path)
+                    
+            except ImportError as e:
+                console.print(f"\n[yellow]⚠️ Export dependencies missing: {e}[/yellow]")
+            except Exception as e:
+                console.print(f"\n[red]❌ Export/send failed: {e}[/red]")
         
     except Exception as e:
         console.print(f"\n[red]❌ Error during analysis: {e}[/red]")
