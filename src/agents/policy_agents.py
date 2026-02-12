@@ -1,8 +1,7 @@
 """Policy document processing agents using CrewAI."""
 
-from crewai import Agent
-from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
+import os
+from crewai import Agent, LLM
 
 from src.config.settings import (
     DEFAULT_LLM_PROVIDER,
@@ -17,15 +16,15 @@ from src.tools.document_tools import DocumentReaderTool, DocumentSearchTool
 def get_llm():
     """Get the configured LLM based on settings."""
     if DEFAULT_LLM_PROVIDER == "anthropic" and ANTHROPIC_API_KEY:
-        return ChatAnthropic(
-            model=ANTHROPIC_MODEL,
-            api_key=ANTHROPIC_API_KEY,
+        os.environ["ANTHROPIC_API_KEY"] = ANTHROPIC_API_KEY
+        return LLM(
+            model=f"anthropic/{ANTHROPIC_MODEL}",
             temperature=0.1,
         )
     elif OPENAI_API_KEY:
-        return ChatOpenAI(
-            model=OPENAI_MODEL,
-            api_key=OPENAI_API_KEY,
+        os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+        return LLM(
+            model=f"openai/{OPENAI_MODEL}",
             temperature=0.1,
         )
     else:
