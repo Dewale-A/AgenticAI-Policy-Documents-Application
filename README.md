@@ -2,6 +2,12 @@
 
 A production-ready **multi-agent AI system** for automated policy compliance analysis and reporting. Built with [CrewAI](https://crewai.com), this system demonstrates how autonomous AI agents can collaborate to ingest, analyze, and report on policy documents.
 
+## 🏗️ System Architecture
+
+<div align="center">
+  <img src="docs/architecture.svg" alt="System Architecture" width="100%"/>
+</div>
+
 ## 🎯 Overview
 
 This system automates compliance assessment using 3 specialized AI agents that work together sequentially, mimicking a real compliance team's workflow:
