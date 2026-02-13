@@ -1,55 +1,55 @@
-# 🔍 Policy Documents Agentic AI Application
+# 🔍 AgenticAI Policy Documents Application
 
-An autonomous multi-agent system for ingesting, analyzing, and reporting on policy documents for compliance assessment. Built with [CrewAI](https://crewai.com) and powered by OpenAI/Anthropic LLMs.
+A production-ready **multi-agent AI system** for automated policy compliance analysis and reporting. Built with [CrewAI](https://crewai.com), this system demonstrates how autonomous AI agents can collaborate to ingest, analyze, and report on policy documents.
 
 ## 🎯 Overview
 
-This proof-of-concept demonstrates how autonomous AI agents can work together to:
-1. **Ingest** policy documents (PDF, DOCX, TXT, MD)
-2. **Analyze** compliance posture and identify gaps
-3. **Generate** professional compliance reports
-
-### Use Cases
-- Regulatory compliance assessment
-- Policy gap analysis
-- Pre-audit preparation
-- Data governance reviews
-- Risk management analysis
-
-## 🏗️ Architecture
+This system automates compliance assessment using 3 specialized AI agents that work together sequentially, mimicking a real compliance team's workflow:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        CrewAI Orchestration                      │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│  │  Ingestion   │───▶│   Analysis   │───▶│    Report    │      │
-│  │    Agent     │    │    Agent     │    │    Agent     │      │
-│  └──────────────┘    └──────────────┘    └──────────────┘      │
-│         │                   │                   │                │
-│         ▼                   ▼                   ▼                │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│  │   Document   │    │     Gap      │    │  Compliance  │      │
-│  │  Extraction  │    │   Analysis   │    │    Report    │      │
-│  └──────────────┘    └──────────────┘    └──────────────┘      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    AGENTIC POLICY COMPLIANCE SYSTEM                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   📁 DOCUMENTS              🔍 ANALYSIS              📋 REPORTING          │
+│   ┌─────────────┐          ┌─────────────┐          ┌─────────────┐        │
+│   │  Ingestion  │─────────▶│  Compliance │─────────▶│   Report    │        │
+│   │    Agent    │          │   Analyst   │          │   Writer    │        │
+│   └─────────────┘          └─────────────┘          └─────────────┘        │
+│         │                        │                        │                 │
+│         ▼                        ▼                        ▼                 │
+│   ┌─────────────┐          ┌─────────────┐          ┌─────────────┐        │
+│   │  • Read     │          │  • Gap      │          │  • Executive│        │
+│   │    PDFs     │          │    Analysis │          │    Summary  │        │
+│   │  • Parse    │          │  • Risk     │          │  • Detailed │        │
+│   │    DOCX     │          │    Scoring  │          │    Findings │        │
+│   │  • Extract  │          │  • Reg      │          │  • Action   │        │
+│   │    Content  │          │    Mapping  │          │    Items    │        │
+│   └─────────────┘          └─────────────┘          └─────────────┘        │
+│                                                                             │
+│                          ┌─────────────────┐                               │
+│                          │    OUTPUT       │                               │
+│                          │  ✓ Markdown     │                               │
+│                          │  ✓ PDF Export   │                               │
+│                          │  ✓ Gap Matrix   │                               │
+│                          └─────────────────┘                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Agents
+## 🤖 Agent Roles
 
-| Agent | Role | Responsibilities |
-|-------|------|------------------|
-| **Ingestion Agent** | Document Specialist | Read documents, extract key information, identify structure |
-| **Analysis Agent** | Compliance Analyst | Map to regulations, identify gaps, assess risk |
-| **Report Agent** | Report Writer | Synthesize findings, create actionable reports |
+| Agent | Role | Tools |
+|-------|------|-------|
+| **Ingestion Agent** | Document Specialist | `document_reader`, `document_search` |
+| **Analysis Agent** | Compliance Analyst | `document_search` |
+| **Report Agent** | Report Writer | — |
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.10+
-- OpenAI API key or Anthropic API key
+- OpenAI API key (or Anthropic)
 
 ### Installation
 
@@ -67,103 +67,126 @@ pip install -r requirements.txt
 
 # Configure environment
 cp .env.example .env
-# Edit .env and add your API keys
+# Edit .env and add your OPENAI_API_KEY
 ```
 
-### Add Policy Documents
-
-Place your policy documents in the `policy_documents/` directory:
-```bash
-policy_documents/
-├── data_governance_policy.pdf
-├── risk_management_policy.docx
-├── information_security_policy.txt
-└── ...
-```
-
-Supported formats: PDF, DOCX, DOC, TXT, MD
-
-### Run Analysis
+### Running the System
 
 ```bash
-# Run full analysis
+# List available documents
+ls policy_documents/
+
+# Run full analysis on all documents
 python main.py
 
-# Focus on specific topic
-python main.py --focus "data governance"
-
-# Focus on specific regulations
+# Focus on specific regulatory area
 python main.py --areas "GDPR,SOX"
 
 # Generate executive summary only
 python main.py --report executive
+
+# Export to PDF
+python main.py --pdf
 ```
-
-## 📋 Output
-
-Reports are saved to `output/compliance_report.md` and include:
-
-- **Executive Summary**: High-level compliance posture
-- **Gap Analysis**: Detailed findings with risk ratings
-- **Regulatory Mapping**: Policy-to-regulation mapping
-- **Recommendations**: Prioritized action items
 
 ## 📁 Project Structure
 
 ```
 AgenticAI-Policy-Documents-Application/
-├── main.py                 # Entry point
+├── main.py                 # Entry point with CLI
 ├── requirements.txt        # Dependencies
 ├── .env.example           # Environment template
+├── policy_documents/      # Input policy documents
+│   ├── sample_data_governance_policy.md
+│   └── sample_risk_management_policy.md
+├── output/                # Generated reports
 ├── src/
-│   ├── agents/            # CrewAI agent definitions
-│   │   └── policy_agents.py
-│   ├── tasks/             # CrewAI task definitions
-│   │   └── policy_tasks.py
-│   ├── tools/             # Custom tools
-│   │   └── document_tools.py
-│   ├── config/            # Configuration
-│   │   └── settings.py
-│   └── crew.py            # Crew orchestration
-├── policy_documents/      # Input documents
-└── output/                # Generated reports
+│   ├── agents/
+│   │   └── policy_agents.py    # Agent definitions
+│   ├── tasks/
+│   │   └── policy_tasks.py     # Task definitions
+│   ├── tools/
+│   │   └── document_tools.py   # Document processing tools
+│   ├── config/
+│   │   └── settings.py         # Configuration
+│   ├── utils/
+│   │   └── export.py           # PDF export utilities
+│   └── crew.py                 # Crew orchestration
+└── tests/                      # Unit tests
 ```
+
+## 📊 Sample Documents
+
+The system includes 2 sample policies demonstrating different compliance areas:
+
+| Document | Type | Coverage |
+|----------|------|----------|
+| Data Governance Policy | Governance | GDPR, data classification, retention |
+| Risk Management Policy | Risk | Enterprise risk, controls, monitoring |
+
+Add your own PDF, DOCX, TXT, or MD files to `policy_documents/` for analysis.
 
 ## ⚙️ Configuration
 
-### Environment Variables
+Key settings in `.env`:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `OPENAI_API_KEY` | OpenAI API key | - |
-| `ANTHROPIC_API_KEY` | Anthropic API key | - |
-| `DEFAULT_LLM_PROVIDER` | LLM to use (openai/anthropic) | openai |
-| `OPENAI_MODEL` | OpenAI model name | gpt-4-turbo-preview |
-| `ANTHROPIC_MODEL` | Anthropic model name | claude-3-sonnet-20240229 |
-| `POLICY_DOCS_DIR` | Documents directory | ./policy_documents |
-| `OUTPUT_DIR` | Output directory | ./output |
+```bash
+OPENAI_API_KEY=sk-...              # Required (or ANTHROPIC_API_KEY)
+OPENAI_MODEL=gpt-4o-mini           # Model selection
+DEFAULT_LLM_PROVIDER=openai        # openai or anthropic
+POLICY_DOCS_DIR=./policy_documents # Input directory
+OUTPUT_DIR=./output                # Output directory
+```
 
-## 🔮 Roadmap
+## 📋 Output Report
 
-- [ ] Add support for more document formats (HTML, XML)
-- [ ] Implement vector database for large document sets
-- [ ] Add regulatory framework templates (GDPR, SOX, Basel)
-- [ ] Create web interface
-- [ ] Add scheduled monitoring capabilities
-- [ ] Export to PDF/PowerPoint formats
+Reports are generated in Markdown and include:
 
-## 🤝 Contributing
+- **Executive Summary**: Overall compliance posture
+- **Gap Analysis**: Missing or incomplete policies
+- **Regulatory Mapping**: Policy-to-regulation coverage
+- **Risk Assessment**: Prioritized findings by severity
+- **Recommendations**: Actionable remediation steps
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 🔧 Extending the System
 
-## 📄 License
+### Adding Custom Tools
+```python
+from crewai.tools import BaseTool
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+class RegulationLookupTool(BaseTool):
+    name: str = "regulation_lookup"
+    description: str = "Look up specific regulatory requirements"
+    
+    def _run(self, regulation: str) -> str:
+        # Implementation
+        return result
+```
 
-## 👨‍💻 Author
+### Supported Document Formats
+- PDF (requires `pypdf`)
+- DOCX (requires `python-docx`)
+- TXT, MD (native)
 
-**Wale Aderonmu** - [GitHub](https://github.com/Dewale-A)
+## 📈 Future Enhancements
+
+- [ ] Vector database for large document sets
+- [ ] Regulatory framework templates (GDPR, SOX, HIPAA)
+- [ ] Real-time policy monitoring
+- [ ] Web interface dashboard
+- [ ] Automated policy update detection
+- [ ] Integration with GRC platforms
+
+## 📜 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 👤 Author
+
+**Dewale A** - Data & AI Governance Professional
+- GitHub: [@Dewale-A](https://github.com/Dewale-A)
+- LinkedIn: [Connect](https://linkedin.com/in/dewale-a)
 
 ---
 
-Built with ❤️ using [CrewAI](https://crewai.com) | Part of the journey to mastering autonomous multi-agent systems
+*Built as part of a portfolio demonstrating autonomous multi-agent systems for financial services.*
