@@ -1,6 +1,6 @@
 # 🔍 AgenticAI Policy Documents Application
 
-A production-ready **multi-agent AI system** for automated policy compliance analysis and reporting. Built with [CrewAI](https://crewai.com), this system demonstrates how autonomous AI agents can collaborate to ingest, analyze, and report on policy documents.
+A production-ready **multi-agent AI system** for automated policy compliance analysis and reporting. Developed with [CrewAI](https://crewai.com), this system demonstrates how autonomous AI agents can collaborate to ingest, analyze, and report on policy documents.
 
 ## 🏗️ System Architecture
 
